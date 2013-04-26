@@ -8,6 +8,9 @@ Most of these scripts are hosted on [my userscripts.org profile][uso]
 as well, so it's probably best to download them from there. For a more detailed
 description of the scripts and how to use them, see their respective page on userscripts.org
 
+Most of the scripts are licensed under the MIT/X11 license (see LICENSE.mit),
+with the exception of the Game Comment Enhancer, which is in the public domain.
+
 List of Scripts
 ---------------
 
