@@ -4,9 +4,9 @@ Kongregate Userscripts
 A collection of the Kongregate userscripts I've written in the past few years.
 Most of these scripts are probably broken by now, so use at your own risk.
 
-Most of these scripts are hosted on [my userscripts.org profile][uso]
-as well, so it's probably best to download them from there. For a more detailed
-description of the scripts and how to use them, see their respective page on userscripts.org
+Most of these scripts are hosted on [my userscripts-mirror.org profile][uso]
+as well, for a more detailed description of the scripts and how to use them, see
+their respective page on userscripts-mirror.org.
 
 Most of the scripts are licensed under the MIT/X11 license (see LICENSE.mit),
 with the exception of the Game Comment Enhancer, which is in the public domain.
@@ -94,7 +94,7 @@ License: MIT/X11 license
 
 Adds pagination and the ability to configure the rating threshold to game comments.
 
-License: MIT/X11 license
+License: Public Domain
 
 #### [In-Chat Timestamp][ict]
 
@@ -136,21 +136,21 @@ cycle through all matches) to the chat.
 
 License: MIT/X11 license
 
-[uso]: http://userscripts.org/users/82514/scripts
-[afk]: http://userscripts.org/scripts/show/48936
-[cnr]: http://userscripts.org/scripts/show/77967
-[char]: http://userscripts.org/scripts/show/48979
-[resize]: http://userscripts.org/scripts/show/70040
-[gce]: http://userscripts.org/scripts/show/84216
-[delfriend]: http://userscripts.org/scripts/show/81561
-[forummute]: http://userscripts.org/scripts/show/103709
-[framework]: http://userscripts.org/scripts/show/54245
-[fullscreen]: http://userscripts.org/scripts/show/70076
-[highlighting]: http://userscripts.org/scripts/show/49868
-[ict]: http://userscripts.org/scripts/show/55571
-[moa]: http://userscripts.org/scripts/show/69220
-[mot]: http://userscripts.org/scripts/show/50785
-[reply]: http://userscripts.org/scripts/show/47963
-[replyhotkey]: http://userscripts.org/scripts/show/47983
-[tab]: http://userscripts.org/scripts/show/49872
-[voices]: http://userscripts.org/scripts/show/89954
+[uso]: http://userscripts-mirror.org/users/82514/scripts
+[afk]: http://userscripts-mirror.org/scripts/show/48936
+[cnr]: http://userscripts-mirror.org/scripts/show/77967
+[char]: http://userscripts-mirror.org/scripts/show/48979
+[resize]: http://userscripts-mirror.org/scripts/show/70040
+[gce]: http://userscripts-mirror.org/scripts/show/84216
+[delfriend]: http://userscripts-mirror.org/scripts/show/81561
+[forummute]: http://userscripts-mirror.org/scripts/show/103709
+[framework]: http://userscripts-mirror.org/scripts/show/54245
+[fullscreen]: http://userscripts-mirror.org/scripts/show/70076
+[highlighting]: http://userscripts-mirror.org/scripts/show/49868
+[ict]: http://userscripts-mirror.org/scripts/show/55571
+[moa]: http://userscripts-mirror.org/scripts/show/69220
+[mot]: http://userscripts-mirror.org/scripts/show/50785
+[reply]: http://userscripts-mirror.org/scripts/show/47963
+[replyhotkey]: http://userscripts-mirror.org/scripts/show/47983
+[tab]: http://userscripts-mirror.org/scripts/show/49872
+[voices]: http://userscripts-mirror.org/scripts/show/89954
