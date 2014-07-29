@@ -37,6 +37,7 @@ License: MIT/X11 license
 #### [Chat Line Highlighting][highlighting]
 
 Allows highlighting of messages containing specific words or sent by specific users in chat.
+Also see the [Extended Chat Line Highlighting](#extended-chat-line-highlighting) script.
 
 License: MIT/X11 license
 
@@ -70,6 +71,14 @@ License: MIT/X11 license
 Adds a "Delete Friend" to link to user profiles.
 
 License: MIT/X11 license
+
+#### Extended Chat Line Highlighting
+
+An advanced version of the Chat Line Highlighting script, with more customization
+options.
+
+License: MIT/X11 license
+
 
 #### [Forum Muting][forummute]
 
