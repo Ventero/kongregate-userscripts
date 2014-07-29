@@ -391,11 +391,9 @@ function makeRow(rule, num){
 
   var styleP = new Element("p", {"class": "rule_stylecontainer"});
   var color = new Element("input", {
-    "type": "text",
+    "type": "color",
     "class": "rule_color",
     "value": "#def6ea",
-  }).observe("blur", function(event){
-    this.setStyle({"backgroundColor": this.value});
   });
 
   styleP.insert(" set ").insert(styleType).insert(" to ").insert(color);
@@ -497,7 +495,6 @@ function makeRow(rule, num){
     target.selectedIndex = Options.targets.get(rule.target).index
     styleType.selectedIndex = Options.styles.get(rule.styleType).index,
     color.value = rule.color;
-    color.setStyle({"backgroundColor": rule.color});
     normalMsg.checked = rule.roomMessages;
     whisperMsg.checked = rule.whisperMessages;
     negate.checked = rule.negateCondition;
