@@ -830,7 +830,7 @@ var chime = (function(){
   }
 })();
 
-// getRules(applyRules);
+getRules(applyRules);
 });
 
 
