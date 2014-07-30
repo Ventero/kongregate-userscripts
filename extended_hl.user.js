@@ -105,8 +105,9 @@ function addChatAction(text, value, callback){
 if(ChatRoom && ChatRoom.prototype && !ChatRoom.prototype._chat_action_wrapped){
   ChatRoom.prototype._chat_action_wrapped = true;
 
-  ChatRoom.prototype.initialize = ChatRoom.prototype.initialize.wrap(function(old, window, room){
-    old(window, room);
+  ChatRoom.prototype.initialize = ChatRoom.prototype.initialize.wrap(function(orig){
+    var ret = orig.apply(this, [].slice.call(arguments, 1));
+
     try{
       this._chat_actions_options.observe("click", function(e) {
         var target = $j(e.target);
@@ -116,6 +117,8 @@ if(ChatRoom && ChatRoom.prototype && !ChatRoom.prototype._chat_action_wrapped){
           holodeck._chat_actions[action](e);
       });
     } catch(e) { }
+
+    return ret;
   });
 }
 
