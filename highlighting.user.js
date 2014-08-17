@@ -5,6 +5,10 @@
 // @author        Ventero
 // @version       2.6
 // @date          2012-10-21
+// @grant         unsafeWindow
+// @grant         GM_setValue
+// @grant         GM_getValue
+// @grant         GM_deleteValue
 // ==/UserScript==
 
 // Written by Ventero (http://www.kongregate.com/accounts/Ventero) 05/23/09

@@ -6,6 +6,7 @@
 // @author         Ventero
 // @version        1.8.3
 // @date           13.03.2011
+// @grant          unsafeWindow
 // ==/UserScript==
 
 // Written by Ventero (http://www.kongregate.com/accounts/Ventero) 05/01/09

@@ -6,6 +6,10 @@
 // @include         http://www.kongregate.com/games/*
 // @date            15.09.2012
 // @version         1.2.4
+// @grant           unsafeWindow
+// @grant           GM_setValue
+// @grant           GM_getValue
+// @grant           GM_deleteValue
 // ==/UserScript==
 
 // Written by Ventero (http://www.kongregate.com/accounts/Ventero) 05/12/09

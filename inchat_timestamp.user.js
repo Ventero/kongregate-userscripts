@@ -6,6 +6,9 @@
 // @author         Ventero
 // @version        1.2.2
 // @date           29.12.10
+// @grant          unsafeWindow
+// @grant          GM_setValue
+// @grant          GM_getValue
 // ==/UserScript==
 
 // Written by Ventero (http://www.kongregate.com/accounts/Ventero) 06/04/09
