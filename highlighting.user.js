@@ -5,7 +5,6 @@
 // @author        Ventero
 // @version       2.6
 // @date          2012-10-21
-// @require       http://kong.ventero.de/updates/49868.js
 // ==/UserScript==
 
 // Written by Ventero (http://www.kongregate.com/accounts/Ventero) 05/23/09

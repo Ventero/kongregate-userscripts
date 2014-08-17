@@ -5,7 +5,6 @@
 // @author          Ventero
 // @include         http://www.kongregate.com/games/*
 // @date            15.09.2012
-// @require         http://kong.ventero.de/updates/70040.js
 // @version         1.2.4
 // ==/UserScript==
 

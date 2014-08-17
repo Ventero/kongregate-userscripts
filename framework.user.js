@@ -6,7 +6,6 @@
 // @author        Ventero
 // @version       1.9
 // @date          05.04.2013
-// @require       http://kong.ventero.de/updates/54245.js
 // @grant         unsafeWindow
 // ==/UserScript==
 

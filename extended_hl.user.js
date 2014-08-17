@@ -28,22 +28,22 @@
  ****************************/
 
 var RULE_PREF = "kong_extended_hl_rules";
-function loadPref(){
+function loadPref() {
   return cloneInto(JSON.parse(GM_getValue(RULE_PREF, "[]")), unsafeWindow);
 }
 
-function savePref(rules){
+function savePref(rules) {
   GM_setValue(RULE_PREF, JSON.stringify(rules));
 }
 
 var s = document.createElement("script");
-s.textContent = "window._initExtendedHL = " + (function(loadPref, savePref){
-function ContentLightbox(){
+s.textContent = "window._initExtendedHL = " + (function(loadPref, savePref) {
+function ContentLightbox() {
   return this.initialize();
 }
 
 ContentLightbox.prototype = {
-  initialize: function(){
+  initialize: function() {
     var self = this;
     this._lb = lightbox.prototype;
     this._lb.deactivate();
@@ -55,39 +55,39 @@ ContentLightbox.prototype = {
     this._lb.done_class_name = "kred_purchase";
 
     this._load_callbacks = [];
-    this._lb.afterStaticContentLoad = function(){
-      self._load_callbacks.each(function(cb){
+    this._lb.afterStaticContentLoad = function() {
+      self._load_callbacks.each(function(cb) {
         cb(self._lb);
       });
       self._load_callbacks = [];
     }
   },
 
-  addCloseCallback: function(cb){
+  addCloseCallback: function(cb) {
     this._lb.addOnCloseCallback(cb);
   },
 
-  addLoadCallback: function(cb){
+  addLoadCallback: function(cb) {
     this._load_callbacks.push(cb);
   },
 
-  show: function(){
+  show: function() {
     this._lb.activate();
   },
 
-  close: function(){
+  close: function() {
     this._lb.deactivate();
   }
 }
 
-function addChatAction(text, value, callback){
+function addChatAction(text, value, callback) {
   var actions = $$("#chat_tab_pane div.chat_actions_container");
-  if(!holodeck || !actions.length)
+  if (!holodeck || !actions.length)
     // not on chat page
     return;
 
-  if(!holodeck._chat_actions) holodeck._chat_actions = {};
-  if(!holodeck._chat_action_nodes) holodeck._chat_action_nodes = [];
+  if (!holodeck._chat_actions) holodeck._chat_actions = {};
+  if (!holodeck._chat_action_nodes) holodeck._chat_action_nodes = [];
   holodeck._chat_actions[value] = callback;
 
   var action = document.createElement("li");
@@ -98,14 +98,14 @@ function addChatAction(text, value, callback){
   var template = $("chat_actions_dropdown_template");
   template.innerHTML = template.innerHTML.replace("</ul>", action.outerHTML + "</ul>");
 
-  if(holodeck._chat_window._active_room)
+  if (holodeck._chat_window._active_room)
     holodeck._chat_window._active_room._chat_actions_options.appendChild(action);
 }
 
-if(ChatRoom && ChatRoom.prototype && !ChatRoom.prototype._chat_action_wrapped){
+if (ChatRoom && ChatRoom.prototype && !ChatRoom.prototype._chat_action_wrapped) {
   ChatRoom.prototype._chat_action_wrapped = true;
 
-  ChatRoom.prototype.initialize = ChatRoom.prototype.initialize.wrap(function(orig){
+  ChatRoom.prototype.initialize = ChatRoom.prototype.initialize.wrap(function(orig) {
     var ret = orig.apply(this, [].slice.call(arguments, 1));
 
     try{
@@ -122,7 +122,7 @@ if(ChatRoom && ChatRoom.prototype && !ChatRoom.prototype._chat_action_wrapped){
   });
 }
 
-function Rule(obj){
+function Rule(obj) {
   this.negateCondition = false;
 
   this.roomMessages = true;
@@ -131,7 +131,7 @@ function Rule(obj){
   this.blinkFavicon = false
   this.caseSensitive = false;
 
-  if(Object.isElement(obj)){
+  if (Object.isElement(obj)) {
     this.index = parseInt(obj.down("td.rule_index").innerHTML, 10);
     this.target = this.parseNode(obj.down("select.rule_target"));
     this.condition = this.parseNode(obj.down("select.rule_usercondition")) ||
@@ -148,15 +148,15 @@ function Rule(obj){
     this.playChime = !!this.parseNode(obj.down("input.rule_chime"));
     this.blinkFavicon = !!this.parseNode(obj.down("input.rule_blink"));
     this.caseSensitive = !!this.parseNode(obj.down("input.rule_casesensitivity"));
-  } else if(obj) {
-    if(Object.isString(obj)) obj = JSON.parse(obj);
-    for(var i in obj){
-      if(obj.hasOwnProperty(i)) this[i] = obj[i];
+  } else if (obj) {
+    if (Object.isString(obj)) obj = JSON.parse(obj);
+    for (var i in obj) {
+      if (obj.hasOwnProperty(i)) this[i] = obj[i];
     }
   }
 }
 
-Rule.unserialize = function(str){
+Rule.unserialize = function(str) {
   var rule = {};
   var delim = String.fromCharCode(0xff); // XXX use better delimiter
 
@@ -170,10 +170,11 @@ Rule.unserialize = function(str){
   rule.caseSensitive = !!(bools & 1);
   rule.index = parseInt(parts.shift(), 10);
   rule.target = OptionArrays.targets[parts.shift()].name;
-  if(rule.target == "any"){
+  if (rule.target == "any") {
     parts.shift();
   } else {
-    rule.condition = (rule.target == "user" ? OptionArrays.attributes : OptionArrays.conditions)[parts.shift()].name;
+    var type = (rule.target == "user" ? OptionArrays.attributes : OptionArrays.conditions);
+    rule.condition = type[parts.shift()].name;
   }
   rule.styleType = OptionArrays.styles[parts.shift()].name;
   rule.color = parts.shift();
@@ -183,17 +184,17 @@ Rule.unserialize = function(str){
 }
 
 Rule.prototype = {
-  set color(val){ this._color = ((val && val[0] == "#") ? "" : "#") + val; },
-  get color(){ return this._color == "#" ? "" : this._color; },
+  set color(val) { this._color = ((val && val[0] == "#") ? "" : "#") + val; },
+  get color() { return this._color == "#" ? "" : this._color; },
   get style() { return this.styleType.split("_")[1]; },
   get hasStyle() { return (this.styleType != "none"); },
   get isUserStyle() { return (this.styleType.substring(0, 5) == "user_") },
-  get isStringCondition(){ return (this.target == "msg" || this.target == "name"); },
-  get isUserCondition(){ return (this.target == "user"); },
-  get isAnyCondition(){ return (this.target == "any"); },
-  get matchWords(){
-    if(!this._matchWordsCache){
-      this._matchWordsCache = this.matchText.trim().split(/\s+/).map(function(word){
+  get isStringCondition() { return (this.target == "msg" || this.target == "name"); },
+  get isUserCondition() { return (this.target == "user"); },
+  get isAnyCondition() { return (this.target == "any"); },
+  get matchWords() {
+    if (!this._matchWordsCache) {
+      this._matchWordsCache = this.matchText.trim().split(/\s+/).map(function(word) {
         return new RegExp("\\b" + RegExp.escape(word) + "\\b", "i");
       });
     }
@@ -201,21 +202,21 @@ Rule.prototype = {
     return this._matchWordsCache;
   },
 
-  parseNode: function(node, number){
+  parseNode: function(node, number) {
     return node.visible() ? node.getValue() : null;
   },
 
-  toCSSString: function(){
+  toCSSString: function() {
     return ("#kong_game_ui .chat_message_window ." + this.className + " " +
             (this.isUserStyle ? "span.chat_message_window_username " : "") +
             "{" + this.style + ": " + this.color + " !important; }\n");
   },
 
-  toString: function(){
+  toString: function() {
     return JSON.stringify(this);
   },
 
-  serialize: function(){
+  serialize: function() {
     return [
       (
         this.negateCondition << 5 |
@@ -236,9 +237,9 @@ Rule.prototype = {
     ].join(String.fromCharCode(0xff)); // XXX use better delimiter
   },
 
-  validate: function(){
+  validate: function() {
     var validMatchWords = true;
-    if(this.isStringCondition && this.condition == "includesOne"){
+    if (this.isStringCondition && this.condition == "includesOne") {
       try{
         validMatchWords = this.matchWords.length > 0;
       } catch(e) {
@@ -254,19 +255,19 @@ Rule.prototype = {
            validMatchWords;
   },
 
-  matches: function(user, msg){
+  matches: function(user, msg) {
     var matchFunc, self = this;
-    if(this.isUserCondition){
-      matchFunc = function(user, msg){
+    if (this.isUserCondition) {
+      matchFunc = function(user, msg) {
         return user[self.condition];
       }
-    } else if(this.isAnyCondition){
-      matchFunc = function(user, msg){
+    } else if (this.isAnyCondition) {
+      matchFunc = function(user, msg) {
         return true;
       }
-    } else if(this.isStringCondition){
+    } else if (this.isStringCondition) {
       var target = (self.target == "name" ? user.username : msg);
-      switch(this.condition){
+      switch(this.condition) {
         case "startsWith":
         case "include":
         case "equals":
@@ -279,7 +280,7 @@ Rule.prototype = {
           break;
         case "includesOne":
           matchFunc = function(user, msg) {
-            return self.matchWords.any(function(regexp){
+            return self.matchWords.any(function(regexp) {
               return regexp.test(target);
             });
           }
@@ -323,12 +324,12 @@ var Options = {
 }
 
 var OptionArrays = {};
-for(var i in Options){
-  if(Options.hasOwnProperty(i)){
-    OptionArrays[i] = Options[i].map(function(kv){
+for (var i in Options) {
+  if (Options.hasOwnProperty(i)) {
+    OptionArrays[i] = Options[i].map(function(kv) {
       kv.value.name = kv.key;
       return kv.value;
-    }).sort(function(a, b){
+    }).sort(function(a, b) {
       return a.index - b.index;
     });
   }
@@ -337,27 +338,30 @@ for(var i in Options){
 /****************************
  *        GUI stuff         *
  ****************************/
-function extendElements(){
-  if(HTMLSelectElement && HTMLSelectElement.prototype && HTMLSelectElement.prototype.populate) return;
+function extendElements() {
+  if (HTMLSelectElement && HTMLSelectElement.prototype && HTMLSelectElement.prototype.populate)
+    return;
 
   Element.addMethods("SELECT", {
-    "populate": function(element, options){
+    "populate": function(element, options) {
       var sel = $(element);
-      if(!sel) return;
-      $H(options).toArray().sort(function(a, b){
+      if (!sel) return;
+
+      $H(options).toArray().sort(function(a, b) {
         return a.value.index - b.value.index;
-      }).each(function(kv){
+      }).each(function(kv) {
         sel.insert(new Element("option", {
           value: kv.key
         }).update(kv.value.text));
       });
+
       return sel;
     }
   });
 }
 
-function makeRow(rule, num){
-  function showElements(target){
+function makeRow(rule, num) {
+  function showElements(target) {
     var hideStr = (target == "user") ? Element.show : Element.hide;
     var showStr = (target == "name" || target == "msg") ? Element.show : Element.hide;
 
@@ -366,21 +370,23 @@ function makeRow(rule, num){
     showStr(value);
     caseSensitive.disabled = !(target == "name" || target == "msg");
   }
-  function swapIdxs(a, b){
+
+  function swapIdxs(a, b) {
     var nextIdx = a.down(".rule_index");
     var curIdx = b.down(".rule_index");
     var curIdxNum = curIdx.innerHTML;
     curIdx.update(nextIdx.innerHTML);
     nextIdx.update(curIdxNum);
   }
-  function resetInfo(event){
+
+  function resetInfo(event) {
     $("exthl_infomessage").update("");
   }
 
   var tr = new Element("tr", {"class": "highlight_rule"})
       .insert('<td class="rule_index center">' + num + '</td>');
 
-  var target = new Element("select", {"class": "rule_target"}).observe("change", function(event){
+  var target = new Element("select", {"class": "rule_target"}).observe("change", function(event) {
     showElements(event.target.value);
   }).populate(Options.targets);
   var userAttribs = new Element("select", {"class": "rule_usercondition"}).populate(Options.attributes);
@@ -407,7 +413,7 @@ function makeRow(rule, num){
     "type": "checkbox",
     "checked": false,
     "class": "rule_negate"
-  }).observe("mouseover", function(event){
+  }).observe("mouseover", function(event) {
     $("exthl_infomessage").update("Negate rule");
   }).observe("mouseout", resetInfo);
   tr.insert(new Element("td", {"class": "center"}).insert(negate));
@@ -416,7 +422,7 @@ function makeRow(rule, num){
     "type": "checkbox",
     "checked": true,
     "class": "rule_normalmsg"
-  }).observe("mouseover", function(event){
+  }).observe("mouseover", function(event) {
     $("exthl_infomessage").update("Apply rule to room messages");
   }).observe("mouseout", resetInfo);
 
@@ -424,7 +430,7 @@ function makeRow(rule, num){
     "type": "checkbox",
     "checked": false,
     "class": "rule_whispermsg"
-  }).observe("mouseover", function(event){
+  }).observe("mouseover", function(event) {
     $("exthl_infomessage").update("Apply rule to whispers");
   }).observe("mouseout", resetInfo);
 
@@ -432,7 +438,7 @@ function makeRow(rule, num){
     "type": "checkbox",
     "checked": true,
     "class": "rule_blink"
-  }).observe("mouseover", function(event){
+  }).observe("mouseover", function(event) {
     $("exthl_infomessage").update("Blink favicon");
   }).observe("mouseout", resetInfo);
 
@@ -440,7 +446,7 @@ function makeRow(rule, num){
     "type": "checkbox",
     "checked": false,
     "class": "rule_chime"
-  }).observe("mouseover", function(event){
+  }).observe("mouseover", function(event) {
     $("exthl_infomessage").update("Play chime");
   }).observe("mouseout", resetInfo);
 
@@ -448,7 +454,7 @@ function makeRow(rule, num){
     "type": "checkbox",
     "checked": false,
     "class": "rule_casesensitivity"
-  }).observe("mouseover", function(event){
+  }).observe("mouseover", function(event) {
     $("exthl_infomessage").update("Match text is case sensitive");
   }).observe("mouseout", resetInfo);
 
@@ -456,45 +462,45 @@ function makeRow(rule, num){
             .insert(whisperMsg).insert(blink).insert(chime).insert(caseSensitive));
 
   var up = new Element("input", {type: "button", value: "↑"}).observe("click",
-    function(event){
+    function(event) {
       var tr = event.findElement("tr");
       var prev = tr.previous();
-      if(prev){
+      if (prev) {
         prev.insert({before: tr});
         swapIdxs(prev, tr);
       }
       event.stop();
     }
-  ).observe("mouseover", function(event){
+  ).observe("mouseover", function(event) {
     $("exthl_infomessage").update("Increase priority");
   }).observe("mouseout", resetInfo);
 
   var down = new Element("input", {type: "button", value: "↓"}).observe("click",
-    function(event){
+    function(event) {
       var li = event.findElement("tr");
       var next = tr.next();
-      if(next){
+      if (next) {
         next.insert({after: tr});
         swapIdxs(next, tr);
       }
       event.stop();
     }
-  ).observe("mouseover", function(event){
+  ).observe("mouseover", function(event) {
     $("exthl_infomessage").update("Decrease priority");
   }).observe("mouseout", resetInfo);
 
   var remove = new Element("input", {type: "button", value: "x"}).observe("click",
-    function(event){
+    function(event) {
       event.findElement("tr").remove();
       event.stop();
     }
-  ).observe("mouseover", function(event){
+  ).observe("mouseover", function(event) {
     $("exthl_infomessage").update("Remove rule");
   }).observe("mouseout", resetInfo);
 
   tr.insert(new Element("td", {"class": "center"}).insert(up).insert(down).insert(remove));
 
-  if(rule){
+  if (rule) {
     target.selectedIndex = Options.targets.get(rule.target).index
     styleType.selectedIndex = Options.styles.get(rule.styleType).index,
     color.value = rule.color;
@@ -505,10 +511,10 @@ function makeRow(rule, num){
     chime.checked = rule.playChime;
     caseSensitive.checked = rule.caseSensitive;
 
-    if(rule.isStringCondition) {
+    if (rule.isStringCondition) {
       stringConds.selectedIndex = Options.conditions.get(rule.condition).index;
       value.value = rule.matchText;
-    } else if(rule.isUserCondition) {
+    } else if (rule.isUserCondition) {
       userAttribs.selectedIndex = Options.attributes.get(rule.condition).index;
     }
   }
@@ -518,12 +524,12 @@ function makeRow(rule, num){
   return tr;
 }
 
-function openConfig(rules){
+function openConfig(rules) {
   // refresh added methods, necessary in chrome
   extendElements();
 
   var cbox = new ContentLightbox();
-  cbox.addLoadCallback(function(lb){
+  cbox.addLoadCallback(function(lb) {
     $("kongregate_lightbox_spinner").remove();
 
     $("lightbox").setStyle({
@@ -581,8 +587,8 @@ function openConfig(rules){
                   '</tr>',
                 '</thead>'].join(''));
     var body = new Element("tbody");
-    rules.sortBy(function(rule){return rule.index;})
-         .each(function(rule, idx){
+    rules.sortBy(function(rule) {return rule.index;})
+         .each(function(rule, idx) {
       body.insert(makeRow(rule, idx + 1));
     });
     table.insert(body);
@@ -595,7 +601,7 @@ function openConfig(rules){
       "style": "margin-left: 5px; display: inline;"
     });
     var addRule = new Element("input", {type: "button", value: "Add rule"})
-        .observe("click", function(event){
+        .observe("click", function(event) {
       body.insert(makeRow(null, body.select("tr.highlight_rule").length + 1));
       tablediv.scrollTop = tablediv.scrollHeight
       event.stop();
@@ -603,13 +609,13 @@ function openConfig(rules){
     bottomdiv.insert(addRule);
 
     var save = new Element("input", {type: "button", value: "Save rules"})
-        .observe("click", function(event){
+        .observe("click", function(event) {
       event.stop();
 
-      var rules = body.select("tr").map(function(tr){return new Rule(tr);});
-      var failed = rules.map(function(rule, idx){return [idx+1, rule.validate()];})
-                        .reject(function(a){return a[1]});
-      if(failed.length){
+      var rules = body.select("tr").map(function(tr) {return new Rule(tr);});
+      var failed = rules.map(function(rule, idx) {return [idx+1, rule.validate()];})
+                        .reject(function(a) {return a[1]});
+      if (failed.length) {
         statusMsg.update("Couldn't validate rule" + (failed.length > 1 ? "s " : " ") +
                          failed.invoke("first").join(", ") + ".").wrap("b");
       } else {
@@ -629,7 +635,7 @@ function openConfig(rules){
     box.insert(bottomdiv);
   });
 
-  cbox.addCloseCallback(function(lb){
+  cbox.addCloseCallback(function(lb) {
     $("exthl_lightbox_style").remove();
     $("lightbox").setStyle({
       "width": "",
@@ -672,10 +678,10 @@ function saveRules(rules) {
 }
 
 function applyRules(rules) {
-  holodeck._extended_incoming_message_filters = rules.sortBy(function(rule){
+  holodeck._extended_incoming_message_filters = rules.sortBy(function(rule) {
     return -rule.index;
   }).map(function(rule) {
-    if(rule.hasStyle){
+    if (rule.hasStyle) {
       rule.className = "hl_rule" + ruleIdx++;
       styleNode.insert(rule.toCSSString());
     }
@@ -687,8 +693,8 @@ function applyRules(rules) {
       var matches = (rule.roomMessages && !whisper || rule.whisperMessages && whisper) &&
                     rule.matches(params.user, params.msg);
 
-      if(matches){
-        if(rule.hasStyle && !attributes[rule.styleType]){
+      if (matches) {
+        if (rule.hasStyle && !attributes[rule.styleType]) {
           attributes[rule.styleType] = true;
           attributes["class"] += " " + rule.className;
         }
@@ -713,7 +719,7 @@ holodeck.filterExtendedIncomingMessage = function(params, display) {
 
 holodeck.getUser = function(name) {
   return (this.chatWindow() &&
-          holodeck.chatWindow()._rooms.map(function(kv){return kv.value.user(name)}).compact().first() ||
+          holodeck.chatWindow()._rooms.map(function(kv) {return kv.value.user(name)}).compact().first() ||
           {username: name, variables: {}}
          );
 }
@@ -741,7 +747,7 @@ ChatDialogue.prototype.displayUnsanitizedMessage = Function.wrap.call(ChatDialog
     function displayFunc(params) {
       // only chime if it's no automatically generated message (like Kong Bot stuff
       // or outgoing "I am AFK"-messages)
-      if(!params.options.non_user && params.displayUser == params.user.username)
+      if (!params.options.non_user && params.displayUser == params.user.username)
         chime(params.attributes.blinkFavicon, params.attributes.playChime);
       orig(params.displayUser, params.displayMsg, params.attributes, params.options);
     }
@@ -764,17 +770,17 @@ ChatDialogue.prototype.displayUnsanitizedMessage = Function.wrap.call(ChatDialog
   }
 );
 
-holodeck.addChatCommand("hlconfig", function(l, n){
+holodeck.addChatCommand("hlconfig", function(l, n) {
   getRules(openConfig);
   return false;
 });
 
-addChatAction("Highlight config", "hlconfig", function(event){
+addChatAction("Highlight config", "hlconfig", function(event) {
   getRules(openConfig);
 });
 
 
-var chime = (function(){
+var chime = (function() {
   /**************************************************************
    * Chime/blinking favicon initially written by MrSpontaneous  *
    * http://userscripts.org/users/Aru                           *
@@ -799,37 +805,37 @@ var chime = (function(){
   var oldTitle = "";
   var pmCount = 0;
 
-  window.addEventListener("blur", function(e){
+  window.addEventListener("blur", function(e) {
     blurred = true;
   }, false);
 
-  window.addEventListener("focus", function(e){
+  window.addEventListener("focus", function(e) {
     blurred = false;
     pmCount = 0;
-    if(animatedFav){
+    if (animatedFav) {
       animatedFav = false;
-      if(blinkingFavicon.parentNode)
+      if (blinkingFavicon.parentNode)
         blinkingFavicon.remove();
       head.insert(staticFavicon);
     }
-    if(oldTitle) document.title = oldTitle;
+    if (oldTitle) document.title = oldTitle;
     oldTitle = "";
   }, false);
 
   return function _chime(blink, chime) {
-    if(!blurred || !(blink || chime)) return;
+    if (!blurred || !(blink || chime)) return;
 
-    if(!oldTitle) oldTitle = document.title;
+    if (!oldTitle) oldTitle = document.title;
     document.title = "[" + ++pmCount + "] " + oldTitle;
 
-    if(blink && !animatedFav){
+    if (blink && !animatedFav) {
       animatedFav = true;
-      if(staticFavicon.parentNode)
+      if (staticFavicon.parentNode)
         staticFavicon.remove();
       head.insert(blinkingFavicon);
     }
 
-    if(chime) chimeNode.play();
+    if (chime) chimeNode.play();
   }
 })();
 
@@ -841,9 +847,9 @@ var target = ("holodeck" in unsafeWindow ? "holodeck:ready" : "dom:javascript_lo
 document.addEventListener("dataavailable", function listener(e) {
   var evt = e.wrappedJSObject || e;
 
-  if(evt.eventName != target) return;
+  if (evt.eventName != target) return;
 
-  // window.setTimeout(function(){
+  // window.setTimeout(function() {
     document.body.appendChild(s);
     document.body.removeChild(s);
     unsafeWindow._initExtendedHL(

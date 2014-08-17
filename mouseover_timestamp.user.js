@@ -6,7 +6,6 @@
 // @author        Ventero
 // @version       1.2.2
 // @date          06.04.2013
-// @require       http://kong.ventero.de/updates/50785.js
 // ==/UserScript==
 
 // Written by Ventero (http://www.kongregate.com/accounts/Ventero) 06/04/09

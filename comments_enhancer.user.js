@@ -7,7 +7,6 @@
 // @include        http://www.kongregate.com/games/*/*/comments*
 // @date           26.09.2011
 // @version        1.4
-// @require        http://kong.ventero.de/updates/84216.js
 // ==/UserScript==
 
 // Written by Ventero (http://www.kongregate.com/accounts/Ventero) 08/23/2010

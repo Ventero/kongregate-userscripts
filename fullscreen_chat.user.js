@@ -6,7 +6,6 @@
 // @include         http://www.kongregate.com/games/*
 // @date            06/29/10
 // @version         1.5
-// @require         http://kong.ventero.de/updates/70076.js
 // ==/UserScript==
 
 // Written by Ventero (http://www.kongregate.com/accounts/Ventero) 02/27/10
