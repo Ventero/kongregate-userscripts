@@ -1,58 +1,40 @@
 // ==UserScript==
-// @name           Character-limit
+// @name           Character Limit
 // @namespace      tag://kongregate
 // @description    Limits your textinput to 250 characters
 // @include        http://www.kongregate.com/games/*
-// @version        1.5.2
-// @date           12.11.10
+// @version        1.6
+// @date           2014-08-18
 // @author         Ventero
-// @grant          unsafeWindow
+// @grant          none
+// @require        http://kong.ventero.de/require.js
 // ==/UserScript==
 
 // Written by Ventero (http://www.kongregate.com/accounts/Ventero) 05/12/09
 
-var dom = (typeof unsafeWindow === "undefined" ? window : unsafeWindow);
+function init_characterLimit(){
+  if (ChatDialogue.prototype.oldKeyPressLimit_V)
+    return;
 
-function init_characterLimitVent(){
+  ChatDialogue.prototype.oldKeyPressLimit_V = ChatDialogue.prototype.onKeyPress;
+  ChatDialogue.prototype.onKeyPress = function () {
+    var node = (this._input_node.wrappedJSObject || this._input_node);
 
-	var CDialogue = dom.ChatDialogue;
+    this.oldKeyPressLimit_V.apply(this, arguments);
 
-	if(CDialogue){
-		CDialogue.prototype = dom.CDprototype||dom.ChatDialogue.prototype;
-
-		if(!CDialogue.prototype.oldKeyPressLimit){
-			CDialogue.prototype.oldKeyPressLimit = CDialogue.prototype.onKeyPress;
-			CDialogue.prototype.onKeyPress = function (a) {
-				var node = (this._input_node.wrappedJSObject || this._input_node);
-				this.oldKeyPressLimit(a);
-				if (node.getValue().length > 249) {
-					z = node.getValue();
-					var y = "";
-					if (n=z.match(/^(\/\S+\s+\S*\s*)(.*)/)){
-						y=n[2];
-						if (y.length>249){
-							node.setValue(n[1]+y.substr(0, 249))
-						}
-					}else{
-						node.setValue(node.getValue().substr(0, 249))
-					}
-				}
-			}
-		}
-	};
+    if (node.getValue().length > 249) {
+      var z = node.getValue();
+      var y = "";
+      if (n=z.match(/^(\/\S+\s+\S*\s*)(.*)/)){
+        y = n[2];
+        if (y.length > 249){
+          node.setValue(n[1] + y.substr(0, 249))
+        }
+      } else {
+        node.setValue(z.substr(0, 249))
+      }
+    }
+  }
 };
 
-function check(){
-	dom.injectScript = dom.injectScript||(document.getElementById("injectScriptDiv")?document.getElementById("injectScriptDiv").onclick():0);
-	if(dom.injectScript){
-		dom.injectScript(init_characterLimitVent, 0);
-	} else if(!dom._promptedFramework && !/Chrome/i.test(navigator.appVersion)){
-		if(confirm("You don't have the latest version of the framework-script!\n" +
-		           "Please install it, otherwise the scripts won't work.\n" +
-		           "Clicking ok will open a new tab where you can install the script"))
-			window.open("http://userscripts.org/scripts/show/54245", "_blank");
-		dom._promptedFramework = true;
-	}
-}
-
-setTimeout(check, 0);
+runWhenReady(init_characterLimit);
