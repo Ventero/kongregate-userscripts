@@ -33,55 +33,55 @@
 var cache = {};
 
 function checkAPI(gameNode){
-	var URL = gameNode.querySelector("a").href;
-	if(cache[URL]) return;
-	cache[URL] = 1
+  var URL = gameNode.querySelector("a").href;
+  if(cache[URL]) return;
+  cache[URL] = 1
 
-	var target = gameNode.querySelector(".thumb dd");
-	var apiNode = document.createElement("div");
+  var target = gameNode.querySelector(".thumb dd");
+  var apiNode = document.createElement("div");
 
-	apiNode.style.cssFloat = "left";
-	apiNode.style.backgroundColor = "#f0f0f0";
-	apiNode.style.border = "1px solid rgb(51,51,51)";
-	apiNode.style.marginLeft = "2px";
-	apiNode.style.marginRight = "2px";
-	apiNode.style.marginTop = "-27px";
-	apiNode.style.minWidth = "70px";
-	apiNode.innerHTML = "Checking..."
-	target.appendChild(apiNode);
+  apiNode.style.cssFloat = "left";
+  apiNode.style.backgroundColor = "#f0f0f0";
+  apiNode.style.border = "1px solid rgb(51,51,51)";
+  apiNode.style.marginLeft = "2px";
+  apiNode.style.marginRight = "2px";
+  apiNode.style.marginTop = "-27px";
+  apiNode.style.minWidth = "70px";
+  apiNode.innerHTML = "Checking..."
+  target.appendChild(apiNode);
 
-	var xhr = new XMLHttpRequest();
-	xhr.onload = function(){
-		if(xhr.readyState == 4 && xhr.status < 400){
-			var matchValues = xhr.responseText.match(/new\s+Holodeck\(([^\)]+)\)/);
-			if(matchValues){
-				if(/"statistics":\[[^\]]+/.test(matchValues[1])){
-					if(/accomplishment_tasks":\[[^\]]/.test(matchValues[1])){
-						apiNode.innerHTML = "Badges";
-						apiNode.style.color = "#0000ff";
-					} else {
-						apiNode.innerHTML = "API";
-						apiNode.style.color = "#00ff00";
-					}
-				} else {
-					apiNode.innerHTML = "No API";
-					apiNode.style.color = "#ff0000";
-				}
-				if(/shared_content_type_names":\[[^\]]/.test(matchValues[1])){
-					apiNode.style.marginTop = "-40px";
-					apiNode.innerHTML += "<br/>(User content)";
-				}
-			}
-		}
-	}
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function(){
+    if(xhr.readyState == 4 && xhr.status < 400){
+      var matchValues = xhr.responseText.match(/new\s+Holodeck\(([^\)]+)\)/);
+      if(matchValues){
+        if(/"statistics":\[[^\]]+/.test(matchValues[1])){
+          if(/accomplishment_tasks":\[[^\]]/.test(matchValues[1])){
+            apiNode.innerHTML = "Badges";
+            apiNode.style.color = "#0000ff";
+          } else {
+            apiNode.innerHTML = "API";
+            apiNode.style.color = "#00ff00";
+          }
+        } else {
+          apiNode.innerHTML = "No API";
+          apiNode.style.color = "#ff0000";
+        }
+        if(/shared_content_type_names":\[[^\]]/.test(matchValues[1])){
+          apiNode.style.marginTop = "-40px";
+          apiNode.innerHTML += "<br/>(User content)";
+        }
+      }
+    }
+  }
 
-	xhr.open("GET", URL, true);
-	xhr.send("");
+  xhr.open("GET", URL, true);
+  xhr.send("");
 }
 
 var games = document.getElementsByClassName("game media");
 
 for(i = 0; i < games.length; i++){
-	games[i].addEventListener("mouseover", function(){checkAPI(this)}, false);
-	//checkAPI(games[i]);
+  games[i].addEventListener("mouseover", function(){checkAPI(this)}, false);
+  //checkAPI(games[i]);
 }
