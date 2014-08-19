@@ -7,6 +7,7 @@
 // @version        1.9
 // @date           2014-08-14
 // @require        http://kong.ventero.de/require.js
+// @grant          none
 // ==/UserScript==
 
 // Written by Ventero (http://www.kongregate.com/accounts/Ventero) 05/01/09

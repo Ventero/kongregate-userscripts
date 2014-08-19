@@ -6,6 +6,7 @@
 // @include        http://www.kongregate.com/forums/*
 // @date           05.04.2013
 // @version        0.7
+// @grant          none
 // ==/UserScript==
 // Written by Ventero (http://www.kongregate.com/accounts/Ventero) 07.11.2010
 // Licensed under MIT/X11 license

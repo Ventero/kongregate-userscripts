@@ -6,6 +6,7 @@
 // @author        Ventero
 // @version       1.0
 // @date          03/21/2010
+// @grant          none
 // ==/UserScript==
 
 // Written by Ventero (http://www.kongregate.com/accounts/Ventero) 06/22/10
