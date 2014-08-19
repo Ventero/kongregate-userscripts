@@ -5,8 +5,10 @@
 // @include       http://www.kongregate.com/accounts/*
 // @description   Allows you to mute users in the Kongregate forums. All posts by muted users get hidden.
 // @author        Ventero
-// @version       1.3
-// @date          13.10.2010
+// @version       1.4
+// @date          2014-08-19
+// @grant         GM_getValue
+// @grant         GM_setValue
 // ==/UserScript==
 
 // Written by Ventero (http://www.kongregate.com/accounts/Ventero) 05/23/09
@@ -56,7 +58,7 @@ function unmuteUser(user){
 }
 
 function addButton(postsRow, text, callback){
-  var vcard = postsRow.getElementsByClassName("vcard")[0];
+  var vcard = postsRow.getElementsByClassName("form_ctrls mtm regtextSml")
   if(!vcard) return;
 
   removeButton(vcard);
