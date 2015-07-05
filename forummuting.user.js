@@ -58,7 +58,7 @@ function unmuteUser(user){
 }
 
 function addButton(postsRow, text, callback){
-  var vcard = postsRow.getElementsByClassName("form_ctrls mtm regtextSml")
+  var vcard = postsRow.getElementsByClassName("form_ctrls mtm regtextSml")[0];
   if(!vcard) return;
 
   removeButton(vcard);
