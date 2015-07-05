@@ -1,6 +1,6 @@
 // Written by Ventero (https://github.com/Ventero)
 // Licensed under MIT/X11 license
-// Copyright (c) 2014 Ventero
+// Copyright (c) 2014-2015 Ventero
 // http://www.opensource.org/licenses/mit-license.php
 
 var inSandbox = (typeof unsafeWindow !== "undefined" && unsafeWindow !== window);
@@ -12,6 +12,22 @@ function runInScope(fn, timeout, defineAs) {
     "window." + defineAs + "= (" + fn + ");" :
     "(" + fn + ")()";
 
+  if (inSandbox) {
+    // prefix with scope object generation
+    // ugly hack to prevent global scope pollution
+    // also ensures that every script is injected with its own version of the
+    // require helpers, which prevents version conflicts
+    src = [
+      "(function() {",
+        "var scope = {};",
+        "(" + exportHelper + ")(scope)",
+        "with (scope)",
+          src,
+      "})();"
+    ].join("\n");
+  }
+
+  console.log(src);
   s.textContent = src;
 
   function inject() {
@@ -28,7 +44,6 @@ function runInScope(fn, timeout, defineAs) {
 
 function runWhenReady(fn, timeout) {
   if (sharedScope.__injectionReady) {
-    console.log("Running", fn.name || "anonymous function", "because already ready");
     return setTimeout(fn, timeout || 0);
   }
 
@@ -39,7 +54,6 @@ function runWhenReady(fn, timeout) {
 
     sharedScope.__injectionReady = true;
 
-    console.log("Running", fn.name || "anonymous function");
     setTimeout(fn, timeout || 0);
 
     document.removeEventListener("dataavailable", listener);
@@ -48,8 +62,7 @@ function runWhenReady(fn, timeout) {
 
 
 function exportHelper(scope) {
-  // TODO: stop polluting global scope
-  if (!scope) scope = window;
+  if (!scope) return;
 
   function ContentLightbox() {
     return this.initialize();
@@ -141,11 +154,6 @@ function exportHelper(scope) {
 
   scope.ContentLightbox = ContentLightbox;
   scope.addChatAction = addChatAction;
-}
-
-if (inSandbox) {
-  // TODO: stop polluting scope
-  runInScope(exportHelper, false);
 }
 
 exportHelper(this);
