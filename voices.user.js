@@ -18,7 +18,7 @@ function createVoices(){
   forum_info.setStyle({overflow: "visible"});
 
   var sidebar = new Element("div", {
-    style: "position: absolute; width: 300px; right: 0px; top: -30px;"
+    style: "position: relative; width: auto; right: 0px;"
   }).insert(new Element("h5").update("Voices"));
   var container = sidebar.wrap(new Element("div", {
     style: "position: relative;"
