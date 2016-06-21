@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           Clickable Links
+// @name           Kongregate Chat Clickable Links
 // @namespace      ventero.de
 // @description    Makes all links in chat clickable
 // @include        http://www.kongregate.com/games/*

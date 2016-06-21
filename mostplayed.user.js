@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name          Most played
+// @name          Kongregate Chat Most played
 // @namespace     ventero.de
 // @include       http://www.kongregate.com/games/*
 // @description   /mp #number lists the mostplayed games in the room

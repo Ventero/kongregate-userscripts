@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           Extended Chat Line Highlighting
+// @name           Kongregate Extended Chat Line Highlighting
 // @namespace      ventero.de
 // @include        http://www.kongregate.com/games/*
 // @version        0.3.0

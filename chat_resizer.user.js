@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name            Chat Resizer
+// @name            Kongregate Chat Resizer
 // @namespace       tag://kongregate
 // @description     Automatically resizes the chat to a specified value. This value can be overriden for single games.
 // @author          Ventero

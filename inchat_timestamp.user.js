@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           In-Chat Timestamp
+// @name           Kongregate In-Chat Timestamp
 // @namespace      tag://kongregate
 // @description    Adds a timestamp to every message (format: "[01:23:34 AM] user: message"). You can change the format with /timeformat 12 or 24 to 12/24-hour-clock. /tscolor hexcode changes color of timestamp. /toggleseconds
 // @include        http://www.kongregate.com/games/*

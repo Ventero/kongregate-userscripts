@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           Username-completion
+// @name           Kongregate Chat Username-completion
 // @namespace      tag://kongregate
 // @description    When pressing tab, this script replaces the current word with the first user in the userlist whose name starts with that word. Pressing tab again selects the next user etc.
 // @include        http://www.kongregate.com/games/*

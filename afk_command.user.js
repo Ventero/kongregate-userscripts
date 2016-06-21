@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           AFK Command
+// @name           Kongregate AFK Command
 // @namespace      tag://kongregate
 // @description    Adds an /afk-command to Kongregate's chat, which will flag you as afk. When flagged as afk, you automatically send a notice to the user who whispered you.
 // @include        http://www.kongregate.com/games/*
