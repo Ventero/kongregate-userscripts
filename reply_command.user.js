@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           Reply Command
+// @name           Kongregate Chat Reply Command
 // @namespace      tag://kongregate
 // @description    Adds a /r-command for Kongregate's chat which automatically replaces with "/w <Last user who sent you a whisper>" when pressing space. If you didn't receive a whisper yet, it gets replaced by "/w "
 // @include        http://www.kongregate.com/games/*

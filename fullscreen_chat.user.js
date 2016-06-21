@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name            Fullscreen Chat
+// @name            Kongregate Fullscreen Chat
 // @namespace       tag://kongregate
 // @description     Adds a chat action which hides the game and makes the chat use the available free space
 // @author          Ventero

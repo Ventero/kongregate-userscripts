@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           Character Limit
+// @name           Kongregate Chat Character Limit
 // @namespace      tag://kongregate
 // @description    Limits your textinput to 250 characters
 // @include        http://www.kongregate.com/games/*

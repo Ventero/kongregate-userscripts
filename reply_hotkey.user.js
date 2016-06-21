@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           Reply Command (hotkey)
+// @name           Kongregate Chat Reply Command (hotkey)
 // @namespace      tag://kongregate
 // @description    Inserts the username of the last user who whispered you when pressing Alt-R
 // @include        http://www.kongregate.com/games/*

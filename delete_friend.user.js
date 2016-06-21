@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name          Delete Friend Link for Kongregate
+// @name          Kongregate Delete Friend Link
 // @namespace     ventero.de
 // @description   Adds a "delete friend"-link to each of your friends' profiles.
 // @include       http://www.kongregate.com/accounts/*

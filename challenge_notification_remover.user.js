@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name          Challenge Notification Remover for Kongregate Chat
+// @name          Kongregate Chat Challenge Notification Remover
 // @namespace     ventero.de
 // @include       http://www.kongregate.com/games/*
 // @description   This script removes the challenge notification in Kongregate's Chat
